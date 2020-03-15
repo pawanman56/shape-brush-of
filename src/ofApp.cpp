@@ -5,6 +5,8 @@ void ofApp::setup(){
   ofSetBackgroundAuto(false);
   ofBackground(0);
   ofSetFrameRate(60);
+  ofEnableAlphaBlending();
+  //ofDisableAlphaBlending();
 }
 
 //--------------------------------------------------------------
@@ -15,31 +17,20 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
   if (ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)) {
-    ofSetRectMode(OF_RECTMODE_CENTER);
-    int numRect = 10;
+    int maxRadius = 100;
+    int radiusStepSize = 5;
+    int alpha = 3;
+    int maxOffsetDistance = 100;
 
-    for (int r = 0; r < numRect; r++) {
-      ofSetColor(ofRandom(50, 255));
-      float width = ofRandom(5, 20);
-      float height = ofRandom(5, 20);
-
-      //For rectangle bursts
-      //float xOffset = ofRandom(-40, 40);
-      //float yOffset = ofRandom(-40, 40);
-
-      //For circular brush bursts
-
-      // Formula for converting from polar to cartesian coordinates
-      // x = cos(polar angle) * (polar distance)
-      // y = sin(polar angle) * (polar distance)
-      // angle must be in radian for the formula
-  
+    // drawing smaller circles over smaller circles, as a layer, increases the opaqueness
+    for (int r = maxRadius; r > 0; r -= radiusStepSize) {
       float angle = ofRandom(ofDegToRad(360.0));
-      float distance = ofRandom(35);
-
+      float distance = ofRandom(maxOffsetDistance);
       float xOffset = cos(angle) * distance;
       float yOffset = sin(angle) * distance;
-      ofDrawRectangle(ofGetMouseX() + xOffset, ofGetMouseY() + yOffset, width, height);
+
+      ofSetColor(255, alpha);
+      ofDrawCircle(ofGetMouseX() + xOffset, ofGetMouseY() + yOffset, r);
     }
   }
 
