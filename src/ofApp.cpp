@@ -4,6 +4,7 @@
 void ofApp::setup(){
   ofSetBackgroundAuto(false);
   ofBackground(0);
+  ofSetFrameRate(60);
 }
 
 //--------------------------------------------------------------
@@ -14,10 +15,17 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
   if (ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)) {
-    float randomColor = ofRandom(50, 255);
-    ofSetColor(randomColor);
     ofSetRectMode(OF_RECTMODE_CENTER);
-    ofDrawRectangle(ofGetMouseX(), ofGetMouseY(), 50, 50);
+    int numRect = 10;
+
+    for (int r = 0; r < numRect; r++) {
+      ofSetColor(ofRandom(50, 255));
+      float width = ofRandom(5, 20);
+      float height = ofRandom(5, 20);
+      float xOffset = ofRandom(-40, 40);
+      float yOffset = ofRandom(-40, 40);
+      ofDrawRectangle(ofGetMouseX() + xOffset, ofGetMouseY() + yOffset, width, height);
+    }
   }
 
   if (ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)) {
