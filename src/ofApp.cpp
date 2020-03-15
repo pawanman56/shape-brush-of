@@ -24,6 +24,12 @@ void ofApp::draw(){
     ofVec2f p2(100, 0);
     ofVec2f p3(0, -25.0);
 
+    // rotate the triangle points around the origin
+    float rotation = ofRandom(360);  // rotate fun uses degree
+    p1.rotate(rotation);
+    p2.rotate(rotation);
+    p3.rotate(rotation);
+
     // shift the triangle to the mouse position
     p1 += mousePos;
     p2 += mousePos;
