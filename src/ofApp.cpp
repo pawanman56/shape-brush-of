@@ -17,7 +17,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
   if (ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)) {
-    int maxRadius = 100;
+    int maxRadius = 75;
     int radiusStepSize = 5;
     int alpha = 3;
     int maxOffsetDistance = 100;
@@ -29,7 +29,11 @@ void ofApp::draw(){
       float xOffset = cos(angle) * distance;
       float yOffset = sin(angle) * distance;
 
-      ofSetColor(255, alpha);
+      ofColor myPurple(119, 69, 214, alpha);
+      ofColor myYellow(241, 196, 15, alpha);
+      ofColor inBetween = myPurple.getLerped(myYellow, ofRandom(1.0));
+
+      ofSetColor(inBetween);
       ofDrawCircle(ofGetMouseX() + xOffset, ofGetMouseY() + yOffset, r);
     }
   }
