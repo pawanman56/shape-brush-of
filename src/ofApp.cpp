@@ -19,24 +19,40 @@ void ofApp::draw(){
   if (ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)) {
     ofVec2f mousePos(ofGetMouseX(), ofGetMouseY());
 
-    // define triangle at origin (0, 0) that points to the right
-    ofVec2f p1(0, 25.0);
-    ofVec2f p2(100, 0);
-    ofVec2f p3(0, -25.0);
+    int numTriangles = 10;
+    int minOffset = 5;
+    int maxOffset = 70;
+    int alpha = 150;
 
-    // rotate the triangle points around the origin
-    float rotation = ofRandom(360);  // rotate fun uses degree
-    p1.rotate(rotation);
-    p2.rotate(rotation);
-    p3.rotate(rotation);
+    for (int t = 0; t < numTriangles; t++) {
+      float offDistance = ofRandom(minOffset, maxOffset);
 
-    // shift the triangle to the mouse position
-    p1 += mousePos;
-    p2 += mousePos;
-    p3 += mousePos;
+      // define triangle at origin (0, 0) that points to the right
+      ofVec2f p1(0, 6.5);
+      ofVec2f p2(25, 0);
+      ofVec2f p3(0, -6.5);
 
-    ofSetColor(255, 50);
-    ofDrawTriangle(p1, p2, p3);
+      // rotate the triangle points around the origin
+      float rotation = ofRandom(360);  // rotate fun uses degree
+      p1.rotate(rotation);
+      p2.rotate(rotation);
+      p3.rotate(rotation);
+
+      ofVec2f triangleOffset(offDistance, 0.0);
+      triangleOffset.rotate(rotation);
+
+      // shift the triangle to the mouse position
+      p1 += mousePos + triangleOffset;
+      p2 += mousePos + triangleOffset;
+      p3 += mousePos + triangleOffset;
+
+      ofColor myPurple(119, 69, 214, alpha);
+      ofColor myBlue(52, 152, 219, alpha);
+      ofColor inBetween = myPurple.getLerped(myBlue, ofRandom(1.0));
+
+      ofSetColor(inBetween);
+      ofDrawTriangle(p1, p2, p3);
+    }
   }
 
   if (ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)) {
