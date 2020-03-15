@@ -22,8 +22,23 @@ void ofApp::draw(){
       ofSetColor(ofRandom(50, 255));
       float width = ofRandom(5, 20);
       float height = ofRandom(5, 20);
-      float xOffset = ofRandom(-40, 40);
-      float yOffset = ofRandom(-40, 40);
+
+      //For rectangle bursts
+      //float xOffset = ofRandom(-40, 40);
+      //float yOffset = ofRandom(-40, 40);
+
+      //For circular brush bursts
+
+      // Formula for converting from polar to cartesian coordinates
+      // x = cos(polar angle) * (polar distance)
+      // y = sin(polar angle) * (polar distance)
+      // angle must be in radian for the formula
+  
+      float angle = ofRandom(ofDegToRad(360.0));
+      float distance = ofRandom(35);
+
+      float xOffset = cos(angle) * distance;
+      float yOffset = sin(angle) * distance;
       ofDrawRectangle(ofGetMouseX() + xOffset, ofGetMouseY() + yOffset, width, height);
     }
   }
