@@ -5,6 +5,8 @@ void ofApp::setup(){
   ofSetBackgroundAuto(false);
   ofBackground(0);
   ofSetFrameRate(60);
+  ofEnableAlphaBlending();
+  //ofDisableAlphaBlending();
 }
 
 //--------------------------------------------------------------
@@ -15,31 +17,23 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
   if (ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)) {
-    ofSetRectMode(OF_RECTMODE_CENTER);
-    int numRect = 10;
+    int numLines = 30;
+    int minRadius = 25;
+    int maxRadius = 100;
 
-    for (int r = 0; r < numRect; r++) {
-      ofSetColor(ofRandom(50, 255));
-      float width = ofRandom(5, 20);
-      float height = ofRandom(5, 20);
-
-      //For rectangle bursts
-      //float xOffset = ofRandom(-40, 40);
-      //float yOffset = ofRandom(-40, 40);
-
-      //For circular brush bursts
-
-      // Formula for converting from polar to cartesian coordinates
-      // x = cos(polar angle) * (polar distance)
-      // y = sin(polar angle) * (polar distance)
-      // angle must be in radian for the formula
-  
+    for (int i = 0; i < numLines; i++) {
       float angle = ofRandom(ofDegToRad(360.0));
-      float distance = ofRandom(35);
-
+      float distance = ofRandom(minRadius, maxRadius);
       float xOffset = cos(angle) * distance;
       float yOffset = sin(angle) * distance;
-      ofDrawRectangle(ofGetMouseX() + xOffset, ofGetMouseY() + yOffset, width, height);
+      float alpha = ofMap(distance, minRadius, maxRadius, 50, 0);  //make shorter lines more opaque
+
+      ofColor myYellow(241, 196, 15, alpha);
+      ofColor myOrange(211, 84, 0, alpha);
+      ofColor inBetween = myYellow.getLerped(myOrange, ofRandom(1.0));
+
+      ofSetColor(inBetween);
+      ofDrawLine(ofGetMouseX(), ofGetMouseY(), ofGetMouseX() + xOffset, ofGetMouseY() + yOffset);
     }
   }
 
